@@ -1,0 +1,20 @@
+model CaseItem {
+  id        String   @id @default(cuid())
+  botId     String
+  channel   String   // "LINE" | "TELEGRAM" | "FB"
+  user      String
+  subject   String
+  urgent    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  @@index([botId, createdAt])
+  @@index([channel, createdAt])
+}
+
+model StatDaily {
+  id        String   @id @default(cuid())
+  botId     String
+  date      DateTime // ใช้เป็นช่วงวัน (UTC 00:00)
+  messages  Int      @default(0)
+  createdAt DateTime @default(now())
+  @@unique([botId, date])
+}
